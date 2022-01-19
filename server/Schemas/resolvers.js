@@ -31,9 +31,9 @@ const resolvers = {
       return { token, user };
     },
     removeBook: (root, { bookId }, context) => {
-      if (context.user) {
-        const updatedUser = Book.findOneAndUpdate(
-          { id_: context.user._id },
+        if (context.user) {
+        const updatedUser = User.findOneAndUpdate(
+          { _id: context.user._id },
           { $pull: { savedBooks: { bookId: bookId } } },
           { new: true }
         );
@@ -41,21 +41,17 @@ const resolvers = {
       }
       throw new AuthenticationError("You need to be logged in!");
     },
-    //
-    //Add resolver for adding a new book here
-    //
-    saveBook: (root, args, context) => {
-        console.log(args, context.user);
-        if (context.user) {
-          const updatedUser = User.findOneAndUpdate(
-            { _id: context.user._id },
-            { $addToSet: { savedBooks: args.savedBooks } },
-            { new: true, runValidators: true }
-          );
-          return updatedUser;
-        } 
-        throw new AuthenticationError("You need to be logged in!");
-      },
+    saveBook: (root, { savedBooks }, context) => {
+      if (context.user) {
+        const updatedUser = User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $addToSet: { savedBooks: savedBooks } },
+          { new: true, runValidators: true }
+        );
+        return updatedUser;
+      }
+      throw new AuthenticationError("You need to be logged in!");
+    },
   },
 };
 

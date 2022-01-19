@@ -26,19 +26,14 @@ const LoginForm = (props) => {
       event.stopPropagation();
     }
     try {
-      const { data } = await login({
+      const  {data}  = await login({
         variables: { ...userFormData },
       });
+      Auth.login(data.login.token);
 
     } catch (error) {
       console.error(error)
       setShowAlert(true);
-    }
-    try {  
-    await Auth.login(data.login.token);
-    
-    } catch (e) {
-      console.error(e)
     }
 
     setUserFormData({

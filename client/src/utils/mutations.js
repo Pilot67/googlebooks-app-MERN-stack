@@ -39,17 +39,31 @@ export const REMOVE_BOOK = gql`
   }
 `;
 
-// export const SAVE_BOOK = gql`
-// mutation saveBook ($bookId: String!, ) {
-//   saveBook () {
-//   savedBooks {
-//     bookId
-//     title
-//     authors
-//     description
-//     image
-//     link
-//   }
-// }
-// }
-// `;
+export const SAVE_BOOK = gql`
+  mutation saveBook(
+    $bookId: String!
+    $authors: [String]
+    $title: String!
+    $description: String!
+    $image: String
+    $link: String
+  ) {
+    saveBook(
+      bookId: $bookId
+      authors: $authors
+      description: $description
+      title: $title
+      image: $image
+      link: $link
+    ) {
+      savedBooks {
+        bookId
+        title
+        authors
+        description
+        image
+        link
+      }
+    }
+  }
+`;

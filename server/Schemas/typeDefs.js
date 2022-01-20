@@ -42,7 +42,7 @@ const typeDefs = gql`
     removeBook(bookId: String!): User
     saveBook(
       bookId: String!
-      authors: [String!]!
+      authors: [String]
       title: String!
       description: String!
       image: String

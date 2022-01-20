@@ -5,6 +5,7 @@ const { signToken } = require("../utils/auth");
 const resolvers = {
   Query: {
     me: (root, args, context) => {
+        console.log("Looking at the server")
       if (context.user) {
         return User.findOne({ _id: context.user._id });
         //might need to add .populate(Books) here
@@ -28,6 +29,7 @@ const resolvers = {
         throw new AuthenticationError("Incorrect credentials");
       }
       const token = signToken(user);
+      console.log("User Signed In")
       return { token, user };
     },
     removeBook: (root, { bookId }, context) => {

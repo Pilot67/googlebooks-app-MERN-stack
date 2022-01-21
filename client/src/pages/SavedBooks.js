@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Jumbotron,
   Container,
@@ -13,15 +13,19 @@ import { REMOVE_BOOK } from "../utils/mutations";
 import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
-
-
-
 const SavedBooks = () => {
+  const [refetchData, setRefetchData] = useState(true)
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
-  const { loading, data , refetch} = useQuery(QUERY_ME);
+  const { loading, data, refetch } = useQuery(QUERY_ME, { refetchOnMount:"always", force: true });
   const userData = data?.me || [];
-  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   
+  // refetch the data if required (first render and after delete)
+  if (refetchData) {
+    setRefetchData(!refetchData)
+    refetch();
+  }
+  
+  // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     try {
       const { data } = await removeBook({ variables: { bookId: bookId } });
@@ -29,10 +33,8 @@ const SavedBooks = () => {
     } catch (error) {
       console.log(error);
     }
-    refetch()
+    setRefetchData(true)
   };
-  
-
   if (loading) {
     return (
       <>
@@ -85,6 +87,16 @@ const SavedBooks = () => {
                   >
                     Delete this Book!
                   </Button>
+                  {book.link ? (
+                    <Button
+                      className="btn-block btn-info"
+                      href={book.link}
+                      rel="noopener"
+                      target="_blank"
+                    >
+                      More Information
+                    </Button>
+                  ) : null}
                 </Card.Body>
               </Card>
             );

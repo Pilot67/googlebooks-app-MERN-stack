@@ -52,20 +52,6 @@ const SavedBooks = () => {
     );
   }
 
-  if (userData.length === 0) {
-    console.log(userData.length);
-    return (
-      <>
-        <Jumbotron fluid className="text-light bg-dark">
-          <Container>
-            <h1>Viewing saved books!</h1>
-          </Container>
-        </Jumbotron>
-
-        <h2>You have no books -er2-</h2>
-      </>
-    );
-  }
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">

@@ -14,17 +14,20 @@ import Auth from "../utils/auth";
 import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
-  const [refetchData, setRefetchData] = useState(true)
+  const [refetchData, setRefetchData] = useState(true);
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
-  const { loading, data, refetch } = useQuery(QUERY_ME, { refetchOnMount:"always", force: true });
+  const { loading, data, refetch } = useQuery(QUERY_ME, {
+    refetchOnMount: "always",
+    force: true,
+  });
   const userData = data?.me || [];
-  
+
   // refetch the data if required (first render and after delete)
   if (refetchData) {
-    setRefetchData(!refetchData)
+    setRefetchData(!refetchData);
     refetch();
   }
-  
+
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
     try {
@@ -33,7 +36,7 @@ const SavedBooks = () => {
     } catch (error) {
       console.log(error);
     }
-    setRefetchData(true)
+    setRefetchData(true);
   };
   if (loading) {
     return (
@@ -49,6 +52,20 @@ const SavedBooks = () => {
     );
   }
 
+  if (userData.length === 0) {
+    console.log(userData.length);
+    return (
+      <>
+        <Jumbotron fluid className="text-light bg-dark">
+          <Container>
+            <h1>Viewing saved books!</h1>
+          </Container>
+        </Jumbotron>
+
+        <h2>You have no books -er2-</h2>
+      </>
+    );
+  }
   return (
     <>
       <Jumbotron fluid className="text-light bg-dark">

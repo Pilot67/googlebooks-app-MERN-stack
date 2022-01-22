@@ -73,7 +73,8 @@ No test files yet, check again soon<br>
 <p align="right">(<a href="#top">back to top</a>)</p>
   
 ## Links
-Published Link: https://fast-meadow-56568.herokuapp.com/<br>
+Published link: https://fast-meadow-56568.herokuapp.com/  
+Github link: https://github.com/Pilot67/googlebooks-app-MERN-stack  
 <p align="right">(<a href="#top">back to top</a>)</p>
   
 ## Questions
